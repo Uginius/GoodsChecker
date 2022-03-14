@@ -1,8 +1,8 @@
-from config import trade_platforms, search_phrases
+from config import trade_platforms, search_phrases, browser_path
 from parsers.parsers import MaxidomLinksGetter
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
+
 
 class SearchLinksGetter:
     def __init__(self, platform):
@@ -12,7 +12,7 @@ class SearchLinksGetter:
         self.browser = None
 
     def run(self):
-        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+        driver = webdriver.Chrome(service=Service(executable_path=browser_path))
         for self.current_phrase in search_phrases:
             parser = MaxidomLinksGetter(self.current_phrase, driver)
             parser.run()

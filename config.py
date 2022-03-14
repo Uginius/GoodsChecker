@@ -1,3 +1,5 @@
+import sys
+
 trade_platforms = {'maxidom': 'https://www.maxidom.ru/',
                    'dns': 'https://www.dns-shop.ru/',
                    'baucenter': 'https://baucenter.ru/',
@@ -17,3 +19,13 @@ headers = {
     'accept-language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
     'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36'
 }
+
+chromedriver_mac_path = 'drivers/chromedriver'
+chromedriver_linux_path = 'drivers/chromedriver_linux64_99.0.4844.51/chromedriver'
+match sys.platform:
+    case 'linux':
+        browser_path = chromedriver_linux_path
+    case 'darwin':
+        browser_path = chromedriver_mac_path
+    case _:
+        print("ERROR: can't found selenium driver")

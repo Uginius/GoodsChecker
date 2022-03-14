@@ -22,3 +22,5 @@ class MaxidomLinksGetter:
         except Exception as ex:
             print(ex)
         print(self.soup)
+        time.sleep(6)
+
