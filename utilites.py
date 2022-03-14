@@ -1,5 +1,7 @@
 import time
 
+from parsers.search_parsers import Maxidom
+
 
 def time_track(func):
     def surrogate(*args, **kwargs):
@@ -11,3 +13,11 @@ def time_track(func):
         return result
 
     return surrogate
+
+
+def select_parser(platform):
+    match platform:
+        case 'maxidom':
+            return Maxidom
+        case _:
+            print('not found platform in list')
