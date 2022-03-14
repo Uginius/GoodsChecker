@@ -1,6 +1,5 @@
+import json
 import time
-
-from parsers.search_parsers import Maxidom
 
 
 def time_track(func):
@@ -15,9 +14,12 @@ def time_track(func):
     return surrogate
 
 
-def select_parser(platform):
-    match platform:
-        case 'maxidom':
-            return Maxidom
-        case _:
-            print('not found platform in list')
+def write_json_items(filename, data):
+    with open(filename, "a") as file:
+        json.dump(data, file, ensure_ascii=False)
+        file.write('\n')
+
+
+def write_html(src, filename):
+    with open(filename, 'w', encoding='utf8') as write_file:
+        write_file.write(src)

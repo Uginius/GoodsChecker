@@ -1,17 +1,20 @@
 import sys
 
-trade_platforms = {'maxidom': 'https://www.maxidom.ru/',
-                   'dns': 'https://www.dns-shop.ru/',
-                   'baucenter': 'https://baucenter.ru/',
-                   'akson': 'https://akson.ru/',
-                   'etm': 'https://www.etm.ru/',
-                   'minimaks': 'https://www.minimaks.ru/',
-                   'sdvor': 'https://www.sdvor.com/moscow',
-                   'eltsnab': 'https://eltsnab.ru/',
-                   'toledo24': 'https://www.toledo24.pro/',
-                   'votonia': 'https://www.votonia.ru/'}
+shops = {'maxidom': 'https://www.maxidom.ru/',
+         'dns': 'https://www.dns-shop.ru/',
+         'baucenter': 'https://baucenter.ru/',
+         'akson': 'https://akson.ru/',
+         'etm': 'https://www.etm.ru/',
+         'sdvor': 'https://www.sdvor.com/moscow',
+         'eltsnab': 'https://eltsnab.ru/',
+         'toledo24': 'https://www.toledo24.pro/',
+         'votonia': 'https://www.votonia.ru/'}
 
-search_phrases = ['фотон', 'контакт', 'safeline']
+search_phrases = [
+    'фотон',
+    'контакт',
+    'safeline'
+]
 
 headers = {
     'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
