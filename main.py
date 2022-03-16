@@ -1,9 +1,11 @@
-from search_links_getter import SearchLinksGetter
+from platforms_and_phrases import PlatformSearcher
 
 
 def get_links():
-    maxidom = SearchLinksGetter('maxidom')
-    maxidom.run()
+    # maxidom = SearchLinksGetter('maxidom')
+    # maxidom.run()
+    dns = PlatformSearcher('dns')
+    dns.run()
 
 
 if __name__ == '__main__':

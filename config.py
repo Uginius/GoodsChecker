@@ -1,5 +1,6 @@
 import sys
 
+wait_time = 3
 shops = {'maxidom': 'https://www.maxidom.ru/',
          'dns': 'https://www.dns-shop.ru/',
          'baucenter': 'https://baucenter.ru/',

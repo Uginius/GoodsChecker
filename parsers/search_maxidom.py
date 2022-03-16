@@ -1,6 +1,4 @@
 import logging
-
-from config import shops
 from parsers.search_parsers import PlatformParser
 from product import Product
 from utilites import write_json_items
