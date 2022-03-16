@@ -1,5 +1,5 @@
 import logging
-from parsers.search_parsers import PlatformParser
+from parsers.outmode.search_parsers import PlatformParser
 from product import Product
 from utilites import write_json_items
 

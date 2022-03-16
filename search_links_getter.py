@@ -2,8 +2,8 @@ import time
 import requests
 from bs4 import BeautifulSoup
 from config import search_phrases, headers
-from parsers.search_maxidom import Maxidom
-from parsers.url_functions import url_maxidom, url_dns
+from parsers.outmode.search_maxidom import Maxidom
+from parsers.outmode.url_functions import url_maxidom
 from utilites import write_html
 
 
@@ -44,7 +44,6 @@ class SearchLinksGetter:
     def get_other_pages(self):
         for i in range(2, self.last_page + 1):
             url = self.url_func(self.current_phrase, i)
-            print('connect to', url)
             r = requests.get(url=url, headers=headers)
             self.search_filename = f'htmls/{self.platform}_{self.current_phrase}_{i:03d}.html'
             write_html(r.text, self.search_filename)
