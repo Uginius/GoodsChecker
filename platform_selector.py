@@ -1,14 +1,16 @@
-from parsers.search_dns import ParserDns
+from parsers.baucenter import ParserBau
+from parsers.dns import ParserDns
+from parsers.maxidom import ParserMaxidom
 
 
 def select_platform(platform):
     match platform:
         case 'maxidom':
-            return 'maxidom'
+            return ParserMaxidom
         case 'dns':
             return ParserDns
         case 'baucenter':
-            return None
+            return ParserBau
         case 'akson':
             return None
         case 'etm':
