@@ -23,6 +23,10 @@ headers = {
     'accept-language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
     'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36'
 }
+selenium_arguments = [
+    'user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36',
+    '--disable-blink-features=AutomationControlled'
+]
 
 chromedriver_mac_path = 'drivers/chromedriver'
 chromedriver_linux_path = 'drivers/chromedriver_linux64_99.0.4844.51/chromedriver'
