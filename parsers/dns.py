@@ -9,7 +9,7 @@ class ParserDns(Searcher):
     def __init__(self, phrase):
         super().__init__(phrase)
         self.shop = 'dns'
-        self.result_filename = f'results/{self.shop}_{phrase}_{datetime.datetime.now().strftime("%d-%m-%Y_%H-%M")}.json'
+        self.result_filename = f'results/{self.shop}_{phrase}_{datetime.datetime.now().strftime("%d-%m-%Y")}.json'
         self.blocklist = ['контакт', 'safeline']
 
     def generate_url(self):
@@ -42,7 +42,7 @@ class ParserDns(Searcher):
         product.url = f"https://www.dns-shop.ru{self.html_product.find('a')['href']}"
         print(product.url)
         try:
-            product.status = self.html_product.find('div', class_='order-avail-wrap').text
+            product.status = self.html_product.find('div', class_='order-avail-wrap').text.strip()
         except AttributeError:
             product.status = 'Отсутствуют в продаже'
         try:

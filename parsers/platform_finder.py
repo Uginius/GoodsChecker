@@ -54,6 +54,7 @@ class Searcher():
         self.soup_page_getter()
         self.get_last_page_number()
         if not GET_FROM_WEB_AND_WRITE:
+            self.clear_result_filename()
             self.get_goods_list()
 
     def get_other_pages(self):
@@ -65,6 +66,10 @@ class Searcher():
     def write_page(self):
         filename = f'htmls/{self.shop}_{self.current_phrase}_{self.page_pos:03d}.html'
         write_html(self.html_data, filename)
+
+    def clear_result_filename(self):
+        with open(self.result_filename, 'w', encoding='utf8') as write_file:
+            pass
 
     def read_page(self):
         filename = f'htmls/{self.shop}_{self.current_phrase}_{self.page_pos:03d}.html'
