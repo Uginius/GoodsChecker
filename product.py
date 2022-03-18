@@ -15,7 +15,11 @@ class Product:
         return self.id, self.name, self.url, self.status, self.price
 
     def json_items(self):
-        return {self.id: [self.name, self.url, self.status, self.price]}
+        return {'id': self.id,
+                'name': self.name,
+                'url': self.url,
+                'status': self.status,
+                'price': self.price}
 
     def json_items_write(self):
         with open('json_result_data.json', "a") as file:

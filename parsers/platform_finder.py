@@ -6,9 +6,10 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 
 GET_FROM_WEB_AND_WRITE = False
+GET_ALL_SEARCH_PAGES = True
 
 
-class Searcher():
+class Searcher:
     def __init__(self, phrase):
         super().__init__()
         self.shop = None
@@ -22,6 +23,7 @@ class Searcher():
         self.html_product = None
         self.result_filename = None
         self.blocklist = []
+        self.html_filename = None
 
     def run(self):
         if self.current_phrase in self.blocklist:
@@ -32,17 +34,19 @@ class Searcher():
             options.add_argument(selenium_arguments[1])
             self.browser = webdriver.Chrome(service=Service(executable_path=browser_path), options=options)
         self.get_first_page()
-        self.get_other_pages()
+        if self.pag > 1:
+            self.get_other_pages()
         if self.browser:
             self.browser.close()
 
     def soup_page_getter(self):
+        self.html_filename = f'htmls/{self.shop}_{self.current_phrase}_{self.page_pos:03d}.html'
         if GET_FROM_WEB_AND_WRITE:
             self.generate_url()
             self.browser.get(url=self.current_url)
             time.sleep(wait_time)
             self.html_data = self.browser.page_source
-            self.write_page()
+            write_html(self.html_data, self.html_filename)
             self.soup = BeautifulSoup(self.html_data, 'lxml')
         else:
             self.read_page()
@@ -63,18 +67,13 @@ class Searcher():
             if not GET_FROM_WEB_AND_WRITE:
                 self.get_goods_list()
 
-    def write_page(self):
-        filename = f'htmls/{self.shop}_{self.current_phrase}_{self.page_pos:03d}.html'
-        write_html(self.html_data, filename)
-
     def clear_result_filename(self):
-        with open(self.result_filename, 'w', encoding='utf8') as write_file:
+        with open(self.result_filename, 'w', encoding='utf8'):
             pass
 
     def read_page(self):
-        filename = f'htmls/{self.shop}_{self.current_phrase}_{self.page_pos:03d}.html'
-        print('opening', filename)
-        with open(filename, 'r', encoding='utf8') as read_file:
+        print('opening', self.html_filename)
+        with open(self.html_filename, 'r', encoding='utf8') as read_file:
             src = read_file.read()
         self.soup = BeautifulSoup(src, 'lxml')
 
