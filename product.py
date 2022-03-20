@@ -5,8 +5,8 @@ class Product:
     def __init__(self):
         self.id = None
         self.shop_name = None
-        self.name = 'name'
-        self.url = 'url'
+        self.name = ''
+        self.url = ''
         self.trade_mark = None
         self.status = None
         self.price = 0

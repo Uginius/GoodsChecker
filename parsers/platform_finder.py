@@ -1,3 +1,4 @@
+import os
 import time
 from bs4 import BeautifulSoup
 from config import browser_path, wait_time, selenium_arguments
@@ -6,14 +7,13 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 
 GET_FROM_WEB_AND_WRITE = False
-GET_ALL_SEARCH_PAGES = True
 
 
 class Searcher:
     def __init__(self, phrase):
         super().__init__()
         self.shop = None
-        self.current_phrase = phrase
+        self.search_phrase = phrase
         self.browser = None
         self.current_url = None
         self.html_data = None
@@ -23,33 +23,38 @@ class Searcher:
         self.html_product = None
         self.result_filename = None
         self.blocklist = []
-        self.html_filename = None
+        self.html_dir = None
+        self.cp = None
 
     def run(self):
-        if self.current_phrase in self.blocklist:
+        if self.search_phrase in self.blocklist:
             return
+        self.check_dir()
         if GET_FROM_WEB_AND_WRITE:
             options = webdriver.ChromeOptions()
             options.add_argument(selenium_arguments[0])
             options.add_argument(selenium_arguments[1])
             self.browser = webdriver.Chrome(service=Service(executable_path=browser_path), options=options)
         self.get_first_page()
-        if self.pag > 1:
+        if self.pag:
             self.get_other_pages()
         if self.browser:
             self.browser.close()
 
     def soup_page_getter(self):
-        self.html_filename = f'htmls/{self.shop}_{self.current_phrase}_{self.page_pos:03d}.html'
         if GET_FROM_WEB_AND_WRITE:
             self.generate_url()
             self.browser.get(url=self.current_url)
+            self.scroll_down()
             time.sleep(wait_time)
             self.html_data = self.browser.page_source
-            write_html(self.html_data, self.html_filename)
+            self.write_page()
             self.soup = BeautifulSoup(self.html_data, 'lxml')
         else:
             self.read_page()
+
+    def scroll_down(self):
+        pass
 
     def generate_url(self):
         pass
@@ -67,13 +72,22 @@ class Searcher:
             if not GET_FROM_WEB_AND_WRITE:
                 self.get_goods_list()
 
+    def check_dir(self):
+        self.html_dir = f'htmls/{self.shop}'
+        if not os.path.exists(self.html_dir):
+            os.makedirs(self.html_dir)
+
+    def write_page(self):
+        write_html(self.html_data, f'{self.html_dir}/{self.shop}_{self.search_phrase}_{self.page_pos:03d}.html')
+
     def clear_result_filename(self):
         with open(self.result_filename, 'w', encoding='utf8'):
             pass
 
     def read_page(self):
-        print('opening', self.html_filename)
-        with open(self.html_filename, 'r', encoding='utf8') as read_file:
+        filename = f'{self.html_dir}/{self.shop}_{self.search_phrase}_{self.page_pos:03d}.html'
+        print('opening', filename)
+        with open(filename, 'r', encoding='utf8') as read_file:
             src = read_file.read()
         self.soup = BeautifulSoup(src, 'lxml')
 

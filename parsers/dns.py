@@ -12,7 +12,7 @@ class ParserDns(Searcher):
         self.blocklist = ['контакт', 'safeline']
 
     def generate_url(self):
-        self.current_url = f'https://www.dns-shop.ru/search/?q={self.current_phrase}&p={self.page_pos}'
+        self.current_url = f'https://www.dns-shop.ru/search/?q={self.search_phrase}&p={self.page_pos}'
         print('connect to', self.current_url)
 
     def get_last_page_number(self):

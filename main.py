@@ -6,8 +6,10 @@ def get_links():
     # maxidom.run()
     # dns = PlatformSearcher('dns')
     # dns.run()
-    bau = PlatformSearcher('baucenter')
-    bau.run()
+    # bau = PlatformSearcher('baucenter')
+    # bau.run()
+    akson = PlatformSearcher('akson')
+    akson.run()
 
 
 if __name__ == '__main__':
