@@ -6,7 +6,7 @@ from utilites import write_html
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 
-GET_FROM_WEB_AND_WRITE = False
+GET_FROM_WEB_AND_WRITE = True
 
 
 class Searcher:
