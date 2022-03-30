@@ -20,6 +20,17 @@ def write_json_items(filename, data):
         file.write('\n')
 
 
+def json_corrector(json_filename):
+    with open(json_filename, "r", encoding='utf8') as file:
+        json_data = [dict(json.loads(line.strip())) for line in file]
+    final_dict = {el.pop('id'): el for el in json_data}
+    with open(json_filename, 'w'):
+        pass
+    for element in final_dict:
+        data_line = {element: final_dict[element]}
+        write_json_items(json_filename, data_line)
+
+
 def write_html(src, filename):
     with open(filename, 'w', encoding='utf8') as write_file:
         write_file.write(src)

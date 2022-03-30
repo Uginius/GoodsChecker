@@ -1,4 +1,3 @@
-import datetime
 import time
 from parsers.platform_finder import Searcher
 from product import Product
@@ -9,7 +8,7 @@ class ParserAkson(Searcher):
     def __init__(self, phrase):
         super().__init__(phrase)
         self.shop = 'akson'
-        self.result_filename = f'results/{self.shop}_{phrase}_{datetime.datetime.now().strftime("%d-%m-%Y")}.json'
+        self.blocklist = ['рекорд']
 
     def generate_url(self):
         self.current_url = f'https://akson.ru/search/?q={self.search_phrase}'
@@ -53,7 +52,6 @@ class ParserAkson(Searcher):
             return
         self.cp.id = int(self.html_product.find('div', class_='product-info__code').text.split()[1])
         self.cp.url = f"https://akson.ru{self.html_product.find('a')['href']}"
-        print(self.cp.url)
         try:
             button_text = self.html_product.find('button').text
             if button_text =='В корзину':
@@ -65,4 +63,4 @@ class ParserAkson(Searcher):
             self.cp.price = price
         except AttributeError:
             self.cp.price = 'Продажи прекращены'
-        write_json_items(f'{self.result_filename}', self.cp.json_items())
+        write_json_items(f'{self.json_file}', self.cp.json_items())

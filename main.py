@@ -1,4 +1,5 @@
 from platforms_and_phrases import PlatformSearcher
+from utilites import json_corrector
 
 
 def get_links():
@@ -11,11 +12,13 @@ def get_links():
     # bau = PlatformSearcher('baucenter')
     # bau.run()
 
-    # akson = PlatformSearcher('akson')
-    # akson.run()
+    akson = PlatformSearcher('akson')
+    akson.run()
+    json_corrector(akson.json_filename)
 
-    etm = PlatformSearcher('etm')
-    etm.run()
+    # etm = PlatformSearcher('etm')
+    # etm.run()
+    # json_corrector(etm.json_filename)
 
 
 if __name__ == '__main__':

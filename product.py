@@ -16,6 +16,7 @@ class Product:
 
     def json_items(self):
         return {'id': self.id,
+                'brand': self.trade_mark,
                 'name': self.name,
                 'url': self.url,
                 'status': self.status,

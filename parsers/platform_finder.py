@@ -1,12 +1,14 @@
+import datetime
+import json
 import os
 import time
 from bs4 import BeautifulSoup
 from config import browser_path, wait_time, selenium_arguments
-from utilites import write_html
+from utilites import write_html, write_json_items, json_corrector
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 
-GET_FROM_WEB_AND_WRITE = True
+GET_FROM_WEB_AND_WRITE = False
 
 
 class Searcher:
@@ -21,7 +23,7 @@ class Searcher:
         self.page_pos = 1
         self.pag = None
         self.html_product = None
-        self.result_filename = None
+        self.json_file = None
         self.blocklist = []
         self.html_dir = None
         self.cp = None
@@ -29,6 +31,7 @@ class Searcher:
     def run(self):
         if self.search_phrase in self.blocklist:
             return
+        self.set_json_filename()
         self.check_dir()
         if GET_FROM_WEB_AND_WRITE:
             options = webdriver.ChromeOptions()
@@ -63,7 +66,7 @@ class Searcher:
         self.soup_page_getter()
         self.get_last_page_number()
         if not GET_FROM_WEB_AND_WRITE:
-            self.clear_result_filename()
+            # self.clear_result_filename()
             self.get_goods_list()
 
     def get_other_pages(self):
@@ -81,7 +84,7 @@ class Searcher:
         write_html(self.html_data, f'{self.html_dir}/{self.shop}_{self.search_phrase}_{self.page_pos:03d}.html')
 
     def clear_result_filename(self):
-        with open(self.result_filename, 'w', encoding='utf8'):
+        with open(self.json_file, 'w', encoding='utf8'):
             pass
 
     def read_page(self):
@@ -99,3 +102,6 @@ class Searcher:
 
     def parse_product(self):
         pass
+
+    def set_json_filename(self):
+        self.json_file = f'results/{self.shop}_{datetime.datetime.now().strftime("%d-%m-%Y")}.json'

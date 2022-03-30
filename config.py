@@ -14,6 +14,7 @@ shops = {'maxidom': 'https://www.maxidom.ru/',
 search_phrases = [
     'фотон',
     'контакт',
+    'рекорд',
     'safeline'
 ]
 
