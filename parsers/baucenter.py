@@ -13,7 +13,7 @@ class ParserBau(Searcher):
     def generate_url(self):
         shop = 'https://baucenter.ru/'
         pagination = f'&PAGEN_1={self.page_pos}' if self.page_pos > 1 else ''
-        self.current_url = f'{shop}search/?q={self.current_phrase}{pagination}'
+        self.current_url = f'{shop}search/?q={self.search_phrase}{pagination}'
         print('connect to', self.current_url)
 
     def get_last_page_number(self):
