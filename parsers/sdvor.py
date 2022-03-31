@@ -44,5 +44,4 @@ class ParserSdvor(Searcher):
                 self.cp.status = 'Нет данных'
         except Exception as ex:
             self.cp.status = 'Нет в наличии'
-            print(ex)
         write_json_items(f'{self.json_file}', self.cp.json_items())
