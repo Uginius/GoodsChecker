@@ -1,14 +1,11 @@
 import datetime
-import json
 import os
 import time
 from bs4 import BeautifulSoup
-from config import browser_path, wait_time, selenium_arguments
-from utilites import write_html, write_json_items, json_corrector
+from config import browser_path, wait_time, selenium_arguments, GET_FROM_WEB_AND_WRITE
+from utilites import write_html
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-
-GET_FROM_WEB_AND_WRITE = False
 
 
 class Searcher:
@@ -27,6 +24,7 @@ class Searcher:
         self.blocklist = []
         self.html_dir = None
         self.cp = None
+        self.search_index_number = 0
 
     def run(self):
         if self.search_phrase in self.blocklist:

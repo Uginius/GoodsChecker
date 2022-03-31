@@ -12,13 +12,17 @@ def get_links():
     # bau = PlatformSearcher('baucenter')
     # bau.run()
 
-    akson = PlatformSearcher('akson')
-    akson.run()
-    json_corrector(akson.json_filename)
+    # akson = PlatformSearcher('akson')
+    # akson.run()
+    # json_corrector(akson.json_filename)
 
     # etm = PlatformSearcher('etm')
     # etm.run()
     # json_corrector(etm.json_filename)
+
+    sdvor = PlatformSearcher('sdvor')
+    sdvor.run()
+    json_corrector(sdvor.json_filename)
 
 
 if __name__ == '__main__':
