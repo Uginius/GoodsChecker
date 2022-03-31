@@ -27,8 +27,6 @@ class Searcher:
         self.search_index_number = 0
 
     def run(self):
-        if self.search_phrase in self.blocklist:
-            return
         self.set_json_filename()
         self.check_dir()
         if GET_FROM_WEB_AND_WRITE:

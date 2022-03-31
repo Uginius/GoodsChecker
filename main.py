@@ -1,5 +1,13 @@
+from config import GET_FROM_WEB_AND_WRITE
 from platforms_and_phrases import PlatformSearcher
 from utilites import json_corrector
+
+
+def runner(platform_name):
+    product_getter = PlatformSearcher(platform_name)
+    product_getter.run()
+    if not GET_FROM_WEB_AND_WRITE:
+        json_corrector(product_getter.json_filename)
 
 
 def get_links():
@@ -20,9 +28,8 @@ def get_links():
     # etm.run()
     # json_corrector(etm.json_filename)
 
-    sdvor = PlatformSearcher('sdvor')
-    sdvor.run()
-    json_corrector(sdvor.json_filename)
+    # runner('sdvor')
+    runner('votonia')
 
 
 if __name__ == '__main__':

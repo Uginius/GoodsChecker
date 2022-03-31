@@ -22,7 +22,7 @@ class Product:
                 'url': self.url,
                 'status': self.status,
                 'price': self.price,
-                'index': self.index
+                # 'index': self.index
                 }
 
     def json_items_write(self):

@@ -12,5 +12,7 @@ class PlatformSearcher:
     def run(self):
         for current_phrase in search_phrases:
             parser = self.parser(current_phrase)
+            if current_phrase in parser.blocklist:
+                continue
             parser.run()
             self.json_filename = parser.json_file
