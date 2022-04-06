@@ -1,6 +1,6 @@
 import sys
 
-GET_FROM_WEB_AND_WRITE = True
+GET_FROM_WEB_AND_WRITE = False
 
 wait_time = 3
 shops = {'maxidom': 'https://www.maxidom.ru/',

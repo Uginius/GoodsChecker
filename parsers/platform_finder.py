@@ -3,7 +3,7 @@ import os
 import time
 from bs4 import BeautifulSoup
 from config import browser_path, wait_time, selenium_arguments, GET_FROM_WEB_AND_WRITE
-from utilites import write_html
+from utilites import write_html, write_json_items
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 
@@ -18,6 +18,7 @@ class Searcher:
         self.html_data = None
         self.soup = None
         self.page_pos = 1
+        self.goods_list = None
         self.pag = None
         self.html_product = None
         self.json_file = None
@@ -60,16 +61,21 @@ class Searcher:
 
     def get_first_page(self):
         self.soup_page_getter()
-        self.get_last_page_number()
-        if not GET_FROM_WEB_AND_WRITE:
-            # self.clear_result_filename()
-            self.get_goods_list()
+        try:
+            self.get_last_page_number()
+        except IndexError:
+            self.pag = None
+        self.get_and_parse_goods_list()
 
     def get_other_pages(self):
         for self.page_pos in range(2, self.pag + 1):
             self.soup_page_getter()
-            if not GET_FROM_WEB_AND_WRITE:
-                self.get_goods_list()
+            self.get_and_parse_goods_list()
+
+    def get_and_parse_goods_list(self):
+        if not GET_FROM_WEB_AND_WRITE:
+            self.get_goods_list()
+            self.parse_goods_list()
 
     def check_dir(self):
         self.html_dir = f'htmls/{self.shop}'
@@ -95,6 +101,14 @@ class Searcher:
 
     def get_goods_list(self):
         pass
+
+    def parse_goods_list(self):
+        if not self.goods_list:
+            return
+        for self.html_product in self.goods_list:
+            self.parse_product()
+            if self.cp.url:
+                write_json_items(f'{self.json_file}', self.cp.json_items())
 
     def parse_product(self):
         pass

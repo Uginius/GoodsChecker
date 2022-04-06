@@ -17,9 +17,7 @@ class ParserEtm(Searcher):
         self.pag = int(self.soup.find('div', class_='MuiBox-root').find_all('span')[0].text.split()[1])
 
     def get_goods_list(self):
-        goods = self.soup.find('div', class_='MuiPaper-rounded').div.find_all('div', recursive=False)
-        for self.html_product in goods:
-            self.parse_product()
+        self.goods_list = self.soup.find('div', class_='MuiPaper-rounded').div.find_all('div', recursive=False)
 
     def parse_product(self):
         self.cp = Product()
@@ -42,4 +40,3 @@ class ParserEtm(Searcher):
             self.cp.price = float(price.replace(',', ''))
         except Exception as ex:
             self.cp.price = f'Цена отсутствует {ex}'
-        write_json_items(f'{self.json_file}', self.cp.json_items())

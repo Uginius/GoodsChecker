@@ -6,8 +6,8 @@ from utilites import json_corrector
 def runner(platform_name):
     product_getter = PlatformSearcher(platform_name)
     product_getter.run()
-    if not GET_FROM_WEB_AND_WRITE:
-        json_corrector(product_getter.json_filename)
+    # if not GET_FROM_WEB_AND_WRITE:
+    #     json_corrector(product_getter.json_filename)
 
 
 def get_links():

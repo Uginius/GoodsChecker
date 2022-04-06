@@ -6,7 +6,7 @@ class Product:
         self.id = None
         self.shop_name = None
         self.name = ''
-        self.url = ''
+        self.url = None
         self.trade_mark = None
         self.status = None
         self.price = 0
@@ -16,13 +16,13 @@ class Product:
         return self.id, self.name, self.url, self.status, self.price
 
     def json_items(self):
-        return {'id': self.id,
-                'brand': self.trade_mark,
-                'name': self.name,
-                'url': self.url,
-                'status': self.status,
-                'price': self.price,
-                # 'index': self.index
+        return {self.id: {'brand': self.trade_mark,
+                          'name': self.name,
+                          'url': self.url,
+                          'status': self.status,
+                          'price': self.price,
+                          # 'index': self.index
+                          }
                 }
 
     def json_items_write(self):
