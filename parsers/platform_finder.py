@@ -1,6 +1,7 @@
 import datetime
 import os
 import time
+
 from bs4 import BeautifulSoup
 from config import browser_path, wait_time, selenium_arguments, GET_FROM_WEB_AND_WRITE
 from utilites import write_html, write_json_items
@@ -23,28 +24,35 @@ class Searcher:
         self.html_product = None
         self.json_file = None
         self.blocklist = []
+        self.brand_list = ['ФОТОН', 'КОНТАКТ', 'РЕКОРД', 'SAFELINE']
         self.html_dir = None
         self.cp = None
         self.search_index_number = 0
 
     def run(self):
         self.set_json_filename()
-        self.check_dir()
-        if GET_FROM_WEB_AND_WRITE:
-            options = webdriver.ChromeOptions()
-            options.add_argument(selenium_arguments[0])
-            options.add_argument(selenium_arguments[1])
-            self.browser = webdriver.Chrome(service=Service(executable_path=browser_path), options=options)
+        self.check_htmls_dir()
+        self.initiate_browser()
         self.get_first_page()
         if self.pag:
             self.get_other_pages()
         if self.browser:
             self.browser.close()
 
+    def initiate_browser(self):
+        if GET_FROM_WEB_AND_WRITE:
+            options = webdriver.ChromeOptions()
+            options.add_argument(selenium_arguments[0])
+            options.add_argument(selenium_arguments[1])
+            self.browser = webdriver.Chrome(service=Service(executable_path=browser_path), options=options)
+
     def soup_page_getter(self):
         if GET_FROM_WEB_AND_WRITE:
             self.generate_url()
-            self.browser.get(url=self.current_url)
+            try:
+                self.browser.get(url=self.current_url)
+            except Exception as ex:
+                pass
             self.scroll_down()
             time.sleep(wait_time)
             self.html_data = self.browser.page_source
@@ -75,9 +83,16 @@ class Searcher:
     def get_and_parse_goods_list(self):
         if not GET_FROM_WEB_AND_WRITE:
             self.get_goods_list()
-            self.parse_goods_list()
+            if not self.goods_list:
+                return
+            for self.html_product in self.goods_list:
+                self.parse_product()
+                if self.cp.trade_mark.upper() not in self.brand_list:
+                    continue
+                if self.cp.url:
+                    write_json_items(f'{self.json_file}', self.cp.json_items())
 
-    def check_dir(self):
+    def check_htmls_dir(self):
         self.html_dir = f'htmls/{self.shop}'
         if not os.path.exists(self.html_dir):
             os.makedirs(self.html_dir)
@@ -101,14 +116,6 @@ class Searcher:
 
     def get_goods_list(self):
         pass
-
-    def parse_goods_list(self):
-        if not self.goods_list:
-            return
-        for self.html_product in self.goods_list:
-            self.parse_product()
-            if self.cp.url:
-                write_json_items(f'{self.json_file}', self.cp.json_items())
 
     def parse_product(self):
         pass

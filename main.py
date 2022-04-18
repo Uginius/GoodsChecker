@@ -30,7 +30,8 @@ def get_links():
 
     # runner('sdvor')
     # runner('votonia')
-    runner('eltsnab')
+    # runner('eltsnab')
+    runner('maxidom')
 
 
 if __name__ == '__main__':
