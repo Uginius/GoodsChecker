@@ -6,17 +6,9 @@ from utilites import json_corrector
 def runner(platform_name):
     product_getter = PlatformSearcher(platform_name)
     product_getter.run()
-    # if not GET_FROM_WEB_AND_WRITE:
-    #     json_corrector(product_getter.json_filename)
 
 
 def get_links():
-    # maxidom = SearchLinksGetter('maxidom')
-    # maxidom.run()
-
-    # dns = PlatformSearcher('dns')
-    # dns.run()
-
     # bau = PlatformSearcher('baucenter')
     # bau.run()
 
@@ -31,7 +23,8 @@ def get_links():
     # runner('sdvor')
     # runner('votonia')
     # runner('eltsnab')
-    runner('maxidom')
+    # runner('maxidom')
+    runner('dns')
 
 
 if __name__ == '__main__':

@@ -23,9 +23,10 @@ class ParserDns(Searcher):
             self.pag = 1
 
     def get_goods_list(self):
-        goods = self.soup.find_all('div', attrs={'data-id': 'product'})
-        for self.html_product in goods:
-            self.parse_product()
+        try:
+            self.goods_list = self.soup.find_all('div', attrs={'data-id': 'product'})
+        except AttributeError:
+            self.goods_list = None
 
     def parse_product(self):
         product = Product()
@@ -40,4 +41,4 @@ class ParserDns(Searcher):
             product.price = int(self.html_product.find('div', class_='product-buy__price').text.split()[0])
         except AttributeError:
             product.price = 'Продажи прекращены'
-        write_json_items(f'{self.result_filename}', product.json_items())
+        self.cp = product
