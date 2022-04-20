@@ -23,9 +23,8 @@ class ParserBau(Searcher):
             self.pag = 1
 
     def get_goods_list(self):
-        goods = self.soup.find('div', class_='catalog-list').find_all('div', class_='catalog_item with-tooltip')
-        for self.html_product in goods:
-            self.parse_product()
+        catalog = self.soup.find('div', class_='catalog-list')
+        self.goods_list = catalog.find_all('div', class_='catalog_item with-tooltip')
 
     def parse_product(self):
         product = Product()
@@ -42,4 +41,10 @@ class ParserBau(Searcher):
             product.price = float(self.html_product['data-price'])
         except AttributeError:
             product.price = 'Нет данных'
-        write_json_items(f'{self.result_filename}', product.json_items())
+        product.trade_mark = self.html_product['data-brand']
+        votes = self.html_product.find('div', class_='catalog_item_rating')
+        if votes.text.strip():
+            product.vote_qt = votes.text.strip()
+            percent = int(votes.find('div', class_='raiting-votes')['style'].split(':')[1][:-2])
+            product.vote_rating = (percent * 5) / 100
+        self.cp = product

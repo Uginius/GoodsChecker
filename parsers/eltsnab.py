@@ -30,7 +30,6 @@ class ParserEltsnab(Searcher):
         self.set_price_and_status()
         self.cp.id = self.html_product.find('span', class_='data').text.split(': ')[1]
         self.check_brand()
-        print(self.cp.json_items())
 
     def set_price_and_status(self):
         try:
