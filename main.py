@@ -9,9 +9,6 @@ def runner(platform_name):
 
 
 def get_links():
-    # bau = PlatformSearcher('baucenter')
-    # bau.run()
-
     # akson = PlatformSearcher('akson')
     # akson.run()
     # json_corrector(akson.json_filename)
@@ -25,6 +22,7 @@ def get_links():
     # runner('eltsnab')
     # runner('maxidom')
     runner('dns')
+    # runner('baucenter')
 
 
 if __name__ == '__main__':

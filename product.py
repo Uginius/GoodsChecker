@@ -11,6 +11,8 @@ class Product:
         self.status = None
         self.price = 0
         self.index = None
+        self.vote_rating = None
+        self.vote_qt = None
 
     def out_items(self):
         return self.id, self.name, self.url, self.status, self.price
@@ -21,6 +23,8 @@ class Product:
                           'url': self.url,
                           'status': self.status,
                           'price': self.price,
+                          'vote_rating': self.vote_rating,
+                          'vote_qt': self.vote_qt,
                           # 'index': self.index
                           }
                 }
