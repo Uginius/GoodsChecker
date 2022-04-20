@@ -90,7 +90,7 @@ class Searcher:
                 if self.cp.trade_mark.upper() not in self.brand_list:
                     continue
                 if self.cp.url:
-                    write_json_items(f'{self.json_file}', self.cp.json_items())
+                    write_json_items(self.json_file, self.cp.json_items())
 
     def check_htmls_dir(self):
         self.html_dir = f'htmls/{self.shop}'

@@ -9,7 +9,7 @@ class ParserDns(Searcher):
         super().__init__(phrase)
         self.shop = 'dns'
         self.result_filename = f'results/{self.shop}_{phrase}_{datetime.datetime.now().strftime("%d-%m-%Y")}.json'
-        self.blocklist = ['контакт', 'safeline']
+        self.blocklist = ['контакт', 'safeline', 'рекорд']
 
     def generate_url(self):
         self.current_url = f'https://www.dns-shop.ru/search/?q={self.search_phrase}&p={self.page_pos}'
@@ -41,4 +41,9 @@ class ParserDns(Searcher):
             product.price = int(self.html_product.find('div', class_='product-buy__price').text.split()[0])
         except AttributeError:
             product.price = 'Продажи прекращены'
+        if 'ФОТОН' in product.name.upper():
+            product.trade_mark = 'ФОТОН'
+        votes = self.html_product.find('a', class_='catalog-product__rating ui-link ui-link_black')
+        product.vote_rating = votes['data-rating']
+        product.vote_qt = votes.text.strip()
         self.cp = product
