@@ -31,15 +31,19 @@ class ParserAkson(Searcher):
 
     def get_goods_list(self):
         html_goods = self.soup.find('div', class_='goods-list__content')
-        goods = html_goods.find_all('div', class_='product-matrix goods-list__matrix')  # ,attrs={'data-id': 'product'}
-        for self.html_product in goods:
-            self.parse_product()
+        self.goods_list = html_goods.find_all('div', class_='product-matrix goods-list__matrix')
+        # ,attrs={'data-id': 'product'}
 
     def check_brand(self):
-        stop_words = ['Бетон', 'Планка', 'Профиль', 'Фотообои',  'Очаг', 'Разъем', 'Фоторамка', 'Портал']
+        name = self.cp.name.upper()
+        brandlist = ['ФОТОН', 'РЕКОРД', 'КОНТАКТ', 'SafeLine']
+        for brand in brandlist:
+            if brand.upper() in name:
+                self.cp.trade_mark = brand
+                break
+        stop_words = ['Бетон', 'Планка', 'Профиль', 'Фотообои', 'Очаг', 'Разъем', 'Фоторамка', 'Портал']
         for word in stop_words:
-            no_our_brand = word.upper() in self.cp.name.upper()
-            # print(word.upper(), self.cp.name.upper(), no_our_brand)
+            no_our_brand = word.upper() in name
             if no_our_brand:
                 return True
         return False
@@ -54,7 +58,7 @@ class ParserAkson(Searcher):
         self.cp.url = f"https://akson.ru{self.html_product.find('a')['href']}"
         try:
             button_text = self.html_product.find('button').text
-            if button_text =='В корзину':
+            if button_text == 'В корзину':
                 self.cp.status = 'В наличии'
         except AttributeError:
             self.cp.status = 'Отсутствуют в продаже'
@@ -63,4 +67,9 @@ class ParserAkson(Searcher):
             self.cp.price = price
         except AttributeError:
             self.cp.price = 'Продажи прекращены'
-        write_json_items(f'{self.json_file}', self.cp.json_items())
+        rate = self.html_product.find('span', class_='rating')
+        stars = rate.find('span', class_='stars__block stars__block_fill')['style']
+        percent = int(stars.split(':')[1][:-2])
+        self.cp.vote_rating = (percent * 5) / 100
+        self.cp.vote_qt = rate.text.split('(')[1].split(')')[0]
+
