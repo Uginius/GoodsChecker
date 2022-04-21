@@ -38,6 +38,7 @@ class Searcher:
             self.get_other_pages()
         if self.browser:
             self.browser.close()
+        self.footer()
 
     def initiate_browser(self):
         if GET_FROM_WEB_AND_WRITE:
@@ -87,8 +88,6 @@ class Searcher:
                 return
             for self.html_product in self.goods_list:
                 self.parse_product()
-                if self.cp.trade_mark.upper() not in self.brand_list:
-                    continue
                 if self.cp.url:
                     write_json_items(self.json_file, self.cp.json_items())
 
@@ -122,3 +121,6 @@ class Searcher:
 
     def set_json_filename(self):
         self.json_file = f'results/{self.shop}_{datetime.datetime.now().strftime("%d-%m-%Y")}.json'
+
+    def footer(self):
+        pass

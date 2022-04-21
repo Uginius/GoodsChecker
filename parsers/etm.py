@@ -1,6 +1,6 @@
 from parsers.platform_finder import Searcher
 from product import Product
-from utilites import write_json_items
+from utilites import write_json_items, json_correct_doubles
 
 
 class ParserEtm(Searcher):
@@ -40,3 +40,7 @@ class ParserEtm(Searcher):
             self.cp.price = float(price.replace(',', ''))
         except Exception as ex:
             self.cp.price = f'Цена отсутствует {ex}'
+
+    def footer(self):
+        # json_correct_doubles(self.json_file)
+        pass

@@ -6,6 +6,7 @@ from utilites import time_track
 class PlatformSearcher:
     def __init__(self, shop):
         self.parser = select_platform(shop)
+        self.json_filename = None
 
     @time_track
     def run(self):
@@ -14,3 +15,4 @@ class PlatformSearcher:
             if current_phrase in parser.blocklist:
                 continue
             parser.run()
+            self.json_filename = parser.json_file

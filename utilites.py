@@ -1,5 +1,6 @@
 import json
 import time
+from pprint import pprint
 
 
 def time_track(func):
@@ -20,14 +21,16 @@ def write_json_items(filename, data):
         file.write('\n')
 
 
-def json_corrector(json_filename):
+def json_correct_doubles(json_filename):
+    json_data = {}
     with open(json_filename, "r", encoding='utf8') as file:
-        json_data = [dict(json.loads(line.strip())) for line in file]
-    final_dict = {el.pop('id'): el for el in json_data}
+        for line in file:
+            loads = json.loads(line.strip())
+            json_data.update(loads)
     with open(json_filename, 'w'):
         pass
-    for element in final_dict:
-        data_line = {element: final_dict[element]}
+    for element in json_data:
+        data_line = {element: json_data[element]}
         write_json_items(json_filename, data_line)
 
 
