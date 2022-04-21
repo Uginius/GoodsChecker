@@ -49,10 +49,8 @@ class ParserAkson(Searcher):
         return False
 
     def parse_product(self):
-        self.cp = Product()
         self.cp.name = self.html_product.find('div', class_='product-info__title').text
         if self.check_brand():
-            self.cp.__init__()
             return
         self.cp.id = int(self.html_product.find('div', class_='product-info__code').text.split()[1])
         self.cp.url = f"https://akson.ru{self.html_product.find('a')['href']}"

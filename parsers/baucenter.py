@@ -27,24 +27,25 @@ class ParserBau(Searcher):
         self.goods_list = catalog.find_all('div', class_='catalog_item with-tooltip')
 
     def parse_product(self):
-        product = Product()
-        product.id = int(self.html_product['data-article'])
-        product.name = self.html_product['data-name']
+        tm = self.html_product['data-brand']
+        if tm.upper() not in self.brand_list:
+            return
+        self.cp.trade_mark = tm
+        self.cp.id = int(self.html_product['data-article'])
+        self.cp.name = self.html_product['data-name']
         link = self.html_product.find('a', attrs={'data-gtm-event': 'product_click'})['href']
-        product.url = f"https://baucenter.ru{link}"
+        self.cp.url = f"https://baucenter.ru{link}"
         try:
             stock = self.html_product.find('div', class_='stock-list').p.text
-            product.status = ' '.join(stock.split())
+            self.cp.status = ' '.join(stock.split())
         except AttributeError:
-            product.status = 'Отсутствуют в продаже'
+            self.cp.status = 'Отсутствуют в продаже'
         try:
-            product.price = float(self.html_product['data-price'])
+            self.cp.price = float(self.html_product['data-price'])
         except AttributeError:
-            product.price = 'Нет данных'
-        product.trade_mark = self.html_product['data-brand']
+            self.cp.price = 'Нет данных'
         votes = self.html_product.find('div', class_='catalog_item_rating')
         if votes.text.strip():
-            product.vote_qt = votes.text.strip()
+            self.cp.vote_qt = votes.text.strip()
             percent = int(votes.find('div', class_='raiting-votes')['style'].split(':')[1][:-2])
-            product.vote_rating = (percent * 5) / 100
-        self.cp = product
+            self.cp.vote_rating = (percent * 5) / 100

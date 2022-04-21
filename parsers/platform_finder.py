@@ -4,6 +4,7 @@ import time
 
 from bs4 import BeautifulSoup
 from config import browser_path, wait_time, selenium_arguments, GET_FROM_WEB_AND_WRITE
+from product import Product
 from utilites import write_html, write_json_items
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -87,7 +88,13 @@ class Searcher:
             if not self.goods_list:
                 return
             for self.html_product in self.goods_list:
+                self.cp = Product()
                 self.parse_product()
+                if not self.cp.trade_mark:
+                    continue
+                if self.cp.trade_mark.upper() not in self.brand_list:
+                    continue
+                self.cp.shop_name = self.shop
                 if self.cp.url:
                     write_json_items(self.json_file, self.cp.json_items())
 

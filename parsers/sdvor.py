@@ -17,9 +17,7 @@ class ParserSdvor(Searcher):
         self.pag = None
 
     def get_goods_list(self):
-        goods = self.soup.find_all('sd-product-grid-item', class_='product-grid-item')
-        for self.html_product in goods:
-            self.parse_product()
+        self.goods_list = self.soup.find_all('sd-product-grid-item', class_='product-grid-item')
 
     def parse_product(self):
         self.search_index_number += 1
@@ -44,4 +42,3 @@ class ParserSdvor(Searcher):
                 self.cp.status = 'Нет данных'
         except Exception as ex:
             self.cp.status = 'Нет в наличии'
-        write_json_items(f'{self.json_file}', self.cp.json_items())

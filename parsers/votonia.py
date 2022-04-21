@@ -32,9 +32,8 @@ class ParserVotonia(Searcher):
             last_height = new_height
 
     def get_goods_list(self):
-        goods = self.soup.find_all('div', class_='wfloat cat_product_box is-product')  # ,attrs={'data-id': 'product'}
-        for self.html_product in goods:
-            self.parse_product()
+        self.goods_list = self.soup.find_all('div', class_='wfloat cat_product_box is-product')
+        # ,attrs={'data-id': 'product'}
 
     def parse_product(self):
         product = self.html_product
@@ -48,4 +47,3 @@ class ParserVotonia(Searcher):
         self.cp.price = float(product['data-market'])
         self.cp.trade_mark = 'Фотон'
         self.cp.status = product.find('div', class_='reach_line reach1').text.strip()
-        write_json_items(f'{self.json_file}', self.cp.json_items())

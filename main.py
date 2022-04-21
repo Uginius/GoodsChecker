@@ -10,14 +10,14 @@ def runner(platform_name):
 
 
 def get_links():
+    runner('akson')
+    # runner('baucenter')
+    # runner('dns')
+    # runner('eltsnab')
+    # runner('etm')
+    # runner('maxidom')
     # runner('sdvor')
     # runner('votonia')
-    # runner('eltsnab')
-    # runner('maxidom')
-    # runner('dns')
-    # runner('baucenter')
-    # runner('akson')
-    runner('etm')
 
 
 if __name__ == '__main__':

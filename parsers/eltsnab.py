@@ -49,3 +49,5 @@ class ParserEltsnab(Searcher):
             if brand.upper() in name:
                 self.cp.trade_mark = brand
                 break
+        if not self.cp.trade_mark:
+            self.cp.trade_mark = ''

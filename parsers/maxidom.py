@@ -48,4 +48,4 @@ class ParserMaxidom(Searcher):
         self.cp.status = self.html_product.find('div', class_='item-controls').span.text.strip()
         self.cp.price = int(
             self.html_product.find('span', class_='price-list').text.split(',-')[0].strip().replace(' ', ''))
-        print(self.cp.json_items())
+
