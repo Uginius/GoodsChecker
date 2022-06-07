@@ -28,8 +28,11 @@ class ParserSdvor(Searcher):
         name = link.text.strip().split()
         self.cp.name = ' '.join(name)
         self.cp.url = 'https://www.sdvor.com' + link['href']
-        price = self.html_product.find('div', class_='price').text.strip().split()[:-1]
-        self.cp.price = float(''.join(price))
+        try:
+            price = self.html_product.find('div', class_='price').text.strip().split()[:-1]
+            self.cp.price = float(''.join(price))
+        except AttributeError:
+            self.cp.price = None
         if 'Фотон'.upper() in self.cp.name.upper():
             self.cp.trade_mark = 'ФОТОН'
         elif 'Изолента'.upper() in self.cp.name.upper():

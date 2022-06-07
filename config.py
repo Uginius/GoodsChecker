@@ -38,5 +38,7 @@ match sys.platform:
         browser_path = chromedriver_linux_path
     case 'darwin':
         browser_path = chromedriver_mac_path
+    case 'win32':
+        browser_path = 'drivers/chromedriver_win32/chromedriver.exe'
     case _:
         print("ERROR: can't found selenium driver")

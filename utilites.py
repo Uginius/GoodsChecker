@@ -16,7 +16,7 @@ def time_track(func):
 
 
 def write_json_items(filename, data):
-    with open(filename, "a") as file:
+    with open(filename, "a", encoding='utf8') as file:
         json.dump(data, file, ensure_ascii=False)
         file.write('\n')
 
